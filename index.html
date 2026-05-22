@@ -499,7 +499,9 @@ function renderGrid() {
     d.onclick = () => toggle(c.id);
     d.innerHTML = `
       <div class="tick">✓</div>
-      <div class="avatar" style="background:${col.bg};color:${col.fg};">${c.initials || c.name.substring(0,2)}</div>
+      <div class="avatar" style="background:${col.bg};color:${col.fg}; overflow:hidden; padding:0;">
+        ${c.photo ? `<img src="${c.photo}" style="width:100%;height:100%;object-fit:cover;" alt="${c.name}">` : (c.initials || c.name.substring(0,2))}
+      </div>
       <p class="c-no">หมายเลข ${c.id}</p>
       <p class="c-name">${c.name}</p>
       <p class="c-dept">${c.dept}</p>
@@ -542,7 +544,9 @@ function goConfirm() {
     const li = document.createElement("li");
     li.innerHTML = `
       <div class="num-badge">${i+1}</div>
-      <div class="sm-avatar" style="background:${col.bg};color:${col.fg};">${c.initials||c.name.substring(0,2)}</div>
+      <div class="sm-avatar" style="background:${col.bg};color:${col.fg}; overflow:hidden; padding:0;">
+        ${c.photo ? `<img src="${c.photo}" style="width:100%;height:100%;object-fit:cover;">` : (c.initials||c.name.substring(0,2))}
+      </div>
       <div style="flex:1;">
         <span style="font-weight:600;">${c.name}</span>
         <span style="font-size:12px;color:var(--muted);margin-left:6px;">${c.dept}</span>
@@ -588,7 +592,8 @@ function openModal(i) {
   const col = COLORS[i % COLORS.length];
   const av  = document.getElementById("m-av");
   av.style.background = col.bg; av.style.color = col.fg;
-  av.textContent = c.initials || c.name.substring(0,2);
+  av.style.padding = "0"; av.style.overflow = "hidden";
+  av.innerHTML = c.photo ? `<img src="${c.photo}" style="width:100%;height:100%;object-fit:cover;">` : (c.initials || c.name.substring(0,2));
   document.getElementById("m-name").textContent = c.name;
   document.getElementById("m-dept").textContent = c.dept;
   document.getElementById("m-bio").textContent  = c.bio || "-";
